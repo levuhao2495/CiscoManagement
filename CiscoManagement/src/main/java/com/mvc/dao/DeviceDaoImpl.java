@@ -28,7 +28,7 @@ public class DeviceDaoImpl implements DeviceDao{
 		// TODO Auto-generated method stub
 		List<Device> devices = null;
 		try{
-	String strQuery= "SELECT * FROM device ";
+	 strQuery= "SELECT * FROM device";
 		devices= m_jdbcTemplate.query(strQuery,
 				new BeanPropertyRowMapper<Device>(Device.class));
 		}catch(Exception e){
@@ -63,7 +63,7 @@ public class DeviceDaoImpl implements DeviceDao{
 		// example: UPDATE device SET  name = 'update' , snmpr ='public' , snmpw ='private'  WHERE deviceid = 11
 		/*strQuery="UPDATE device SET ip= ?, mac= ?, name= ?,type= ?,"
 				+ " version=?, snmpv= ?, snmpr= ?, snmpw = ? WHERE deviceid= ?";*/
-		strQuery="UPDATE device SET name= ?, snmpr= ?, snmpw = ? WHERE deviceid= ?";
+		strQuery="UPDATE device SET name= ?, snmpr= ?, snmpw = ? WHERE deviceId= ?";
 		int count= m_jdbcTemplate.update(strQuery,new Object[]{
 				device.getName(),device.getSnmpr(), device.getSnmpw(), device.getDeviceid()});
 		return count;

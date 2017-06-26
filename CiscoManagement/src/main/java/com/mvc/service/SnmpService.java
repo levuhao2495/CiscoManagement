@@ -1,4 +1,4 @@
-package com.mvc.snmp;
+package com.mvc.service;
 
 import java.io.IOException;
 

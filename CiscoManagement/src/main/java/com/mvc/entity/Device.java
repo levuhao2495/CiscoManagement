@@ -2,15 +2,15 @@ package com.mvc.entity;
 
 public class Device {
 
-	private int m_deviceid;
-	private String m_ip;
-	private String m_mac;
-	private String m_name;
-	private int m_type;
-	private String m_version;
-	private String m_snmpv;
-	private String m_snmpr;
-	private String m_snmpw;
+	private int deviceId;
+	private String ip;
+	private String mac;
+	private String name;
+	private int type;
+	private String version;
+	private String snmpVersion;
+	private String snmpRead;
+	private String snmpWrite;
 
 	public Device(){
 		
@@ -18,69 +18,69 @@ public class Device {
 	public Device(int deviceid, String ip, String mac, String name, int type, String version, String snmpv,
 			String snmpr, String snmpw) {
 		super();
-		this.m_deviceid = deviceid;
-		this.m_ip = ip;
-		this.m_mac = mac;
-		this.m_name = name;
-		this.m_type = type;
-		this.m_version = version;
-		this.m_snmpv = snmpv;
-		this.m_snmpr = snmpr;
-		this.m_snmpw = snmpw;
+		this.deviceId = deviceid;
+		this.ip = ip;
+		this.mac = mac;
+		this.name = name;
+		this.type = type;
+		this.version = version;
+		this.snmpVersion = snmpv;
+		this.snmpRead = snmpr;
+		this.snmpWrite = snmpw;
 	}
 	public int getDeviceid() {
-		return m_deviceid;
+		return deviceId;
 	}
 	public void setDeviceid(int deviceid) {
-		this.m_deviceid = deviceid;
+		this.deviceId = deviceid;
 	}
 
 	public String getIp() {
-		return m_ip;
+		return ip;
 	}
 	public void setIp(String ip) {
-		this.m_ip = ip;
+		this.ip = ip;
 	}
 	public String getMac() {
-		return m_mac;
+		return mac;
 	}
 	public void setMac(String mac) {
-		this.m_mac = mac;
+		this.mac = mac;
 	}
 	public String getName() {
-		return m_name;
+		return name;
 	}
 	public void setName(String name) {
-		this.m_name = name;
+		this.name = name;
 	}
 	public int getType() {
-		return m_type;
+		return type;
 	}
 	public void setType(int type) {
-		this.m_type = type;
+		this.type = type;
 	}
 	public String getVersion() {
-		return m_version;
+		return version;
 	}
 	public void setVersion(String version) {
-		this.m_version = version;
+		this.version = version;
 	}
 	public String getSnmpv() {
-		return m_snmpv;
+		return snmpVersion;
 	}
 	public void setSnmpv(String snmpv) {
-		this.m_snmpv = snmpv;
+		this.snmpVersion = snmpv;
 	}
 	public String getSnmpr() {
-		return m_snmpr;
+		return snmpRead;
 	}
 	public void setSnmpr(String snmpr) {
-		this.m_snmpr = snmpr;
+		this.snmpRead = snmpr;
 	}
 	public String getSnmpw() {
-		return m_snmpw;
+		return snmpWrite;
 	}
 	public void setSnmpw(String snmpw) {
-		this.m_snmpw = snmpw;
+		this.snmpWrite = snmpw;
 	}
 }
