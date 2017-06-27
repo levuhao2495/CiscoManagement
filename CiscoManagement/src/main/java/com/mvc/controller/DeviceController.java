@@ -22,7 +22,7 @@ import com.mvc.service.SnmpService;
 import com.mvc.service.SnmpServiceImpl;
 
 
-@RestController("/apidevice")
+@RestController()
 //@RequestMapping("apidevice")
 public class DeviceController {
 	
@@ -39,6 +39,7 @@ public class DeviceController {
 	  HttpHeaders headers = new HttpHeaders();
 	 // List<Device> devices = deviceDao.getAllDevice();
 	  List<Device> devices = deviceService.getAllDevice();
+	// xu ly get trang thai cua device: off /on
 	  if (devices == null) {
 	   return new ResponseEntity<List<Device>>(HttpStatus.NOT_FOUND);
 	  }
@@ -50,7 +51,7 @@ public class DeviceController {
 	 @RequestMapping(value="/device/{id}", method=RequestMethod.GET, produces ="application/json")
 	 public ResponseEntity<Device> getDevice(@PathVariable("id") int deviceId){
 		Device device= deviceService.getDevice(deviceId);
-		
+		// xu ly get trang thai cua device: off /on
 		if(device == null){
 			return new ResponseEntity<Device>( HttpStatus.NOT_FOUND);
 		}
@@ -66,6 +67,7 @@ public class DeviceController {
 		 }
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Deleted device - ", String.valueOf(deviceId));
+		 // viet ham port service delete port
 		 deviceService.deleteDevice(deviceId);
 		 return new ResponseEntity<Device>(device,headers,HttpStatus.NO_CONTENT);	 
 	 }
@@ -82,18 +84,22 @@ public class DeviceController {
 		}
 		deviceService.updateDevice(device);		
 		snmpService= new SnmpServiceImpl();
-		snmpService.setOID(device.getIp(),OID_Sysname,device.getName());		
+		snmpService.setOID(device.getIp(),OID_Sysname,device.getName());
+		// xu ly them truong hop neu' device dang off
 		headers.add("Updated device - ", String.valueOf(deviceId ));
 		return new ResponseEntity<Device>(device, headers, HttpStatus.OK);		 	  
 	 }	
 	 // create device
 	 @RequestMapping(value = "/device", method = RequestMethod.POST, produces = "application/json")
-	 public ResponseEntity<Device> createDevice(@RequestBody Device device){	 
+	 public ResponseEntity<Device> createDevice(@RequestBody Device device) throws IOException{	 
 		 HttpHeaders headers= new HttpHeaders();
 		 if(device == null){
 			 return new ResponseEntity<Device>(HttpStatus.BAD_REQUEST);
 		 }
 		 deviceService.createDevice(device);
+		 snmpService= new SnmpServiceImpl();
+		 snmpService.setOID(device.getIp(),OID_Sysname,device.getName());
+		 // xu ly them truong hop neu' device off hoac dia chi chua duoc tao tren
 		 headers.add("Device added - ", String.valueOf(device.getDeviceid()));
 		 return new ResponseEntity<Device>(device, headers,HttpStatus.CREATED);		 
 	 }

@@ -13,12 +13,12 @@ import com.mvc.entity.Device;
 @Repository("deviceDao")
 public class DeviceDaoImpl implements DeviceDao{
 
-	private JdbcTemplate m_jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 	String strQuery;
 	
 	@Autowired
 	public void setDataSource(DataSource dataSource){
-		this.m_jdbcTemplate=new JdbcTemplate(dataSource);
+		this.jdbcTemplate=new JdbcTemplate(dataSource);
 	}
 	public DeviceDaoImpl() {
 		// TODO Auto-generated constructor stub
@@ -29,7 +29,7 @@ public class DeviceDaoImpl implements DeviceDao{
 		List<Device> devices = null;
 		try{
 	 strQuery= "SELECT * FROM device";
-		devices= m_jdbcTemplate.query(strQuery,
+		devices= jdbcTemplate.query(strQuery,
 				new BeanPropertyRowMapper<Device>(Device.class));
 		}catch(Exception e){
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class DeviceDaoImpl implements DeviceDao{
 		Device device= null;
 		try {
 			strQuery="SELECT * FROM device WHERE deviceid= ?";
-			device=m_jdbcTemplate.queryForObject(strQuery, new Object[] {deviceId},new BeanPropertyRowMapper<Device>(Device.class));
+			device=jdbcTemplate.queryForObject(strQuery, new Object[] {deviceId},new BeanPropertyRowMapper<Device>(Device.class));
 			} catch (Exception e) {
 			// TODO: handle exception
 				e.printStackTrace();
@@ -53,7 +53,7 @@ public class DeviceDaoImpl implements DeviceDao{
 	public int deleteDevice(int deviceId) {
 		// delete device by deviceId
 		strQuery="DELETE FROM device WHERE deviceid= ?";
-		int count= m_jdbcTemplate.update(strQuery, new Object[] {deviceId});
+		int count= jdbcTemplate.update(strQuery, new Object[] {deviceId});
 		return count;
 	}
 
@@ -64,7 +64,7 @@ public class DeviceDaoImpl implements DeviceDao{
 		/*strQuery="UPDATE device SET ip= ?, mac= ?, name= ?,type= ?,"
 				+ " version=?, snmpv= ?, snmpr= ?, snmpw = ? WHERE deviceid= ?";*/
 		strQuery="UPDATE device SET name= ?, snmpr= ?, snmpw = ? WHERE deviceId= ?";
-		int count= m_jdbcTemplate.update(strQuery,new Object[]{
+		int count= jdbcTemplate.update(strQuery,new Object[]{
 				device.getName(),device.getSnmpr(), device.getSnmpw(), device.getDeviceid()});
 		return count;
 	}
@@ -72,7 +72,7 @@ public class DeviceDaoImpl implements DeviceDao{
 	public int createDevice(Device device) {
 		// TODO Auto-generated method stub
 		strQuery="INSERT INTO device(ip,mac,name,type,version,snmpv,snmpr,snmpw) VALUES(?,?,?,?,?,?,?,?)";
-		int count= m_jdbcTemplate.update(strQuery, new Object[]{
+		int count= jdbcTemplate.update(strQuery, new Object[]{
 				device.getIp(),device.getMac(),device.getName(),device.getType(),device.getVersion(),device.getSnmpv(),device.getSnmpr(),device.getSnmpw()
 		});
 		return count;
