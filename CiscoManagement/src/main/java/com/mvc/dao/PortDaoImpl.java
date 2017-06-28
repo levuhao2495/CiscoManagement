@@ -8,13 +8,15 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.mvc.entity.Device;
 import com.mvc.entity.Port;
 import com.thoughtworks.xstream.converters.javabean.BeanProperty;
 
-@Service("portDao")
-public class PortImpl implements PortDao{
+@Repository("portDao")
+public class PortDaoImpl implements PortDao{
 
 	
 	private JdbcTemplate jdbcTemplate;
@@ -41,7 +43,14 @@ public class PortImpl implements PortDao{
 	@Override
 	public List<Port> getPortByDevice(int iddevice) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Port> ports = null;
+		try{
+			strQuery= "SELECT * FROm port_table WHERE iddevice= ?";
+			ports=jdbcTemplate.query(strQuery, new Object[] {iddevice},new BeanPropertyRowMapper<Port>(Port.class));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ports;
 	}
 
 	@Override

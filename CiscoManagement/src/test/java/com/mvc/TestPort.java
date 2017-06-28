@@ -18,14 +18,14 @@ public class TestPort {
 		context = new ClassPathXmlApplicationContext("spring-config-mvc.xml");
 		PortDao portDao = context.getBean(PortDao.class);
 		List<Port> ports= new ArrayList<Port>();
-		ports=(List<Port>) portDao.getAllPort();
+		ports=(List<Port>) portDao.getPortByDevice(62);
 		System.out.println("-----VIEW LIST------");
 		if(ports.size()==0){
 			System.out.println("No structure!");
 		}else{
 			for(Port i : ports){
-				System.out.println("-----"+i+"------");
-				System.out.println("portname: "+i.getPortName());
+				System.out.println("-----------");
+				System.out.println("portname: "+i.getIddevice());
 				
 			}
 		}

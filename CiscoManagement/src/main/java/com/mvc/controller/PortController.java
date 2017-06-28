@@ -23,6 +23,7 @@ public class PortController {
 	@Autowired
 	private PortService portService;
 	
+	// get all port
 	@RequestMapping(value="/port", method=RequestMethod.GET, produces= "application/json")
 	public ResponseEntity<List<Port>> getAllPort(){
 		HttpHeaders httpHeaders= new HttpHeaders();
@@ -34,17 +35,30 @@ public class PortController {
 		return new ResponseEntity<List<Port>>(ports,httpHeaders,HttpStatus.OK);
 	}
 	
+	// get port by id device
+	@RequestMapping(value="/port/{deviceid}", method=RequestMethod.GET, produces= "application/json")
+	public ResponseEntity<List<Port>> getPortByDevice(@PathVariable("deviceid") Integer deviceid){
+		HttpHeaders httpHeaders= new HttpHeaders();
+		List<Port> ports= portService.getPortByDevice(deviceid);
+		if(ports == null){
+			return new ResponseEntity<List<Port>>(HttpStatus.NOT_FOUND);
+		}
+		httpHeaders.add("Number Of Records Found", String.valueOf(ports.size()));
+		return new ResponseEntity<List<Port>>(ports,httpHeaders,HttpStatus.OK);
+	}
+	
+	//delete port by id device
 	 @RequestMapping(value="/port/{deviceid}", method= RequestMethod.DELETE)
-	 public ResponseEntity<Port> deleteDevice(@PathVariable("deviceid") int deviceId){
-		 List<Port> ports= portService.getPortByDevice(deviceId);	
+	 public ResponseEntity<Port> deletePort(@PathVariable("deviceid") Integer deviceId){
+		 List<Port> ports= portService.getPortByDevice(deviceId);		
 		 if(ports ==null ){
 			 return new ResponseEntity<Port>(HttpStatus.NOT_FOUND);
 		 }
 		 HttpHeaders headers = new HttpHeaders();
-		 headers.add("Deleted device - ", String.valueOf(deviceId));
-		 // viet ham port service delete port
-		 portService.deletePort(deviceId);
+		 headers.add("Deleted port - ", String.valueOf(deviceId));
+		 for(Port i: ports){
+			 portService.deletePort(i.getIddevice());
+		 }
 		 return new ResponseEntity<Port>(headers,HttpStatus.NO_CONTENT);	 
 	 }
-	
 }

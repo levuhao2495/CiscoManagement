@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mvc.dao.PortDao;
+import com.mvc.dao.PortDaoImpl;
 import com.mvc.entity.Port;
 
 @Service("portService")
@@ -22,8 +23,9 @@ public class PortServiceImpl implements PortService{
 
 	@Override
 	public List<Port> getPortByDevice(int iddevice) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Auto-generated method stub	
+		List<Port> ports= portDao.getPortByDevice(iddevice);
+		return ports;
 	}
 
 	@Override
