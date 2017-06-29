@@ -27,14 +27,15 @@ import com.mvc.service.SnmpService;
 import com.mvc.service.SnmpServiceImpl;
 
 
-@RestController()
+@RestController
 //@RequestMapping("apidevice")
 public class DeviceController {
 	
 	
 	@Autowired
-	private DeviceService deviceService; 
-	private PortDao portDao;
+	private DeviceService deviceService;
+	private DeviceDao deviceDao;
+	private PortService portService;
 	private SnmpService snmpService;
 	private String OID_Sysname= ".1.3.6.1.2.1.1.5.0";
 	//private DeviceDao deviceDao;
@@ -44,7 +45,7 @@ public class DeviceController {
 	 public ResponseEntity<List<Device>> getAllDevice() {
 
 	  HttpHeaders headers = new HttpHeaders();
-	 // List<Device> devices = deviceDao.getAllDevice();
+	  //List<Device> devices = deviceDao.getAllDevice();
 	  List<Device> devices = deviceService.getAllDevice();
 	// xu ly get trang thai cua device: off /on
 	  if (devices == null) {
@@ -66,28 +67,27 @@ public class DeviceController {
 	 }
 	 
 	 // delete device by id
-	 @RequestMapping(value="/device/{id}", method= RequestMethod.DELETE)
-	 public ResponseEntity<Device> deleteDevice(@PathVariable("id") int deviceId){
-		 Device device= deviceService.getDevice(deviceId);	
-		 System.out.println("---------" +device.getDeviceid());
-		 if(device ==null ){
-			 return new ResponseEntity<Device>(HttpStatus.NOT_FOUND);
-		 }
-		// viet ham port service delete port 
-		 portDao = new PortDaoImpl();
-		 List<Port> ports= new ArrayList<Port>();
-		 ports=(List<Port>) portDao.getPortByDevice(device.getDeviceid());
-		 System.out.println("aaaaa---------"+ports);
-			for(Port i: ports){		
-				 //portDao.deletePort(i.getIddevice());
-				System.out.println("-------- "+i.getIddevice());
-			}
-			
-		 HttpHeaders headers = new HttpHeaders();
-		 headers.add("Deleted device - ", String.valueOf(deviceId));	 
-		 deviceService.deleteDevice(deviceId);
-		 return new ResponseEntity<Device>(device,headers,HttpStatus.NO_CONTENT);	 
-	 }
+	@RequestMapping(value="/device/{id}", method= RequestMethod.DELETE)
+	public ResponseEntity<Device> deleteDevice(@PathVariable("id") int deviceId) {
+		Device device = deviceService.getDevice(deviceId);	
+		if (device == null) {
+			return new ResponseEntity<Device>(HttpStatus.NOT_FOUND);
+		}
+		//System.out.println("---------" + device.getDeviceid());
+		// viet ham port service delete port	
+		//portService = new PortServiceImpl();
+		/*List<Port> ports = new ArrayList<Port>();
+		ports = portService.getPortByDevice(device.getDeviceid());
+		System.out.println("aaaaa---------" + ports);
+		for (Port i : ports) {
+			// portDao.deletePort(i.getIddevice());
+			System.out.println("-------- " + i.getIddevice());
+		}*/
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Deleted device - ", String.valueOf(deviceId));
+		deviceService.deleteDevice(deviceId);
+		return new ResponseEntity<Device>(device, headers, HttpStatus.NO_CONTENT);
+	}
 	 
 	 // update name and snmp community 
 	 @RequestMapping(value= "/device/{id}", method= RequestMethod.PUT)

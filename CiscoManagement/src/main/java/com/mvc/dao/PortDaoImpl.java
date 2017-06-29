@@ -20,7 +20,7 @@ public class PortDaoImpl implements PortDao{
 
 	
 	private JdbcTemplate jdbcTemplate;
-	String strQuery;
+	private String strQuery;
 	@Autowired
 	
 	public void setDataSource(DataSource dataSource){

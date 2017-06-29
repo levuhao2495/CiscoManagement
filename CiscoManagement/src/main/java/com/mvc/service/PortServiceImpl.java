@@ -24,6 +24,7 @@ public class PortServiceImpl implements PortService{
 	@Override
 	public List<Port> getPortByDevice(int iddevice) {
 		// TODO Auto-generated method stub	
+		//portDao= new PortDaoImpl();
 		List<Port> ports= portDao.getPortByDevice(iddevice);
 		return ports;
 	}

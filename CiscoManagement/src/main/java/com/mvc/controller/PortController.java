@@ -1,5 +1,6 @@
 package com.mvc.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.snmp4j.event.ResponseEvent;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +18,15 @@ import com.mvc.dao.PortDao;
 import com.mvc.entity.Device;
 import com.mvc.entity.Port;
 import com.mvc.service.PortService;
+import com.mvc.service.SnmpService;
+import com.mvc.service.SnmpServiceImpl;
 
-@RestController(value="/apiport")
+@RestController
 public class PortController {
 
 	@Autowired
 	private PortService portService;
-	
+	private SnmpService snmpService;
 	// get all port
 	@RequestMapping(value="/port", method=RequestMethod.GET, produces= "application/json")
 	public ResponseEntity<List<Port>> getAllPort(){
@@ -49,7 +53,7 @@ public class PortController {
 	
 	//delete port by id device
 	 @RequestMapping(value="/port/{deviceid}", method= RequestMethod.DELETE)
-	 public ResponseEntity<Port> deletePort(@PathVariable("deviceid") Integer deviceId){
+	 public ResponseEntity<Port> deletePortByDevice(@PathVariable("deviceid") Integer deviceId){
 		 List<Port> ports= portService.getPortByDevice(deviceId);		
 		 if(ports ==null ){
 			 return new ResponseEntity<Port>(HttpStatus.NOT_FOUND);
@@ -61,4 +65,5 @@ public class PortController {
 		 }
 		 return new ResponseEntity<Port>(headers,HttpStatus.NO_CONTENT);	 
 	 }
+	 
 }
