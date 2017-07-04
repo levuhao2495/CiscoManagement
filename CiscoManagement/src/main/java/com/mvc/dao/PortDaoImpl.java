@@ -31,7 +31,7 @@ public class PortDaoImpl implements PortDao{
 		// TODO Auto-generated method stub
 		List<Port> ports= null;
 		try{
-			strQuery= "SELECT * FROM port_table";
+			strQuery= "SELECT * FROM port";
 			ports=jdbcTemplate.query(strQuery, 
 					new BeanPropertyRowMapper<Port>(Port.class));
 		}catch(Exception e){
@@ -45,7 +45,7 @@ public class PortDaoImpl implements PortDao{
 		// TODO Auto-generated method stub
 		List<Port> ports = null;
 		try{
-			strQuery= "SELECT * FROm port_table WHERE iddevice= ?";
+			strQuery= "SELECT * FROM port WHERE iddevice= ?";
 			ports=jdbcTemplate.query(strQuery, new Object[] {iddevice},new BeanPropertyRowMapper<Port>(Port.class));
 		}catch(Exception e){
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class PortDaoImpl implements PortDao{
 	@Override
 	public int deletePort(int iddevice) {
 		// TODO Auto-generated method stub
-		strQuery="DELETE FROM port_table WHERE iddevice= ?";
+		strQuery="DELETE FROM port WHERE iddevice= ?";
 		return jdbcTemplate.update(strQuery, new Object[] {iddevice});	
 	}
 

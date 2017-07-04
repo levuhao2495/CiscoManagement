@@ -20,7 +20,7 @@ public class TestSnmp {
 		SnmpService snmpService= new SnmpServiceImpl();	
 		try {
 			//System.out.println(snmpService.getOID(ipAddress, oidValue));
-			System.out.println(snmpService.setOID(ipAddress, oidValue, new_value));
+			//System.out.println(snmpService.setOID(ipAddress, oidValue, new_value));
 			System.out.println(snmpService.getOID(ipAddress, oidValue));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

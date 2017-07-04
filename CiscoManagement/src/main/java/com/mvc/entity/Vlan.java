@@ -1,18 +1,32 @@
 package com.mvc.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Vlan {
 
-	private Integer vlanId;
-	private Integer vlanNum;
+	private int vlanId;
+	private int vlanNum;
 	private String vlanDct;
 	private String vlanType;
-	public Integer getVlanId() {
+	/*
+	public Vlan(int vlanId, int vlanNum,
+			 String vlanDct, String vlanType) {
+		super();
+		this.vlanId = vlanId;
+		this.vlanNum = vlanNum;
+		this.vlanDct = vlanDct;
+		this.vlanType = vlanType;
+	}*/
+	public int getVlanId() {
 		return vlanId;
 	}
 	public void setVlanId(Integer vlanId) {
 		this.vlanId = vlanId;
 	}
-	public Integer getVlanNum() {
+	public int getVlanNum() {
 		return vlanNum;
 	}
 	public void setVlanNum(Integer vlanNum) {

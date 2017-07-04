@@ -27,13 +27,12 @@ import com.mvc.service.SnmpService;
 import com.mvc.service.SnmpServiceImpl;
 
 
-@RestController
+@RestController(value="apidevice")
 //@RequestMapping("apidevice")
 public class DeviceController {
 	
-	
 	@Autowired
-	private DeviceService deviceService;
+	//private DeviceService deviceService;
 	private DeviceDao deviceDao;
 	private PortService portService;
 	private SnmpService snmpService;
@@ -45,8 +44,8 @@ public class DeviceController {
 	 public ResponseEntity<List<Device>> getAllDevice() {
 
 	  HttpHeaders headers = new HttpHeaders();
-	  //List<Device> devices = deviceDao.getAllDevice();
-	  List<Device> devices = deviceService.getAllDevice();
+	  List<Device> devices = deviceDao.getAllDevice();
+	 // List<Device> devices = deviceService.getAllDevice();
 	// xu ly get trang thai cua device: off /on
 	  if (devices == null) {
 	   return new ResponseEntity<List<Device>>(HttpStatus.NOT_FOUND);
@@ -58,7 +57,8 @@ public class DeviceController {
 	 //get device by id
 	 @RequestMapping(value="/device/{id}", method=RequestMethod.GET, produces ="application/json")
 	 public ResponseEntity<Device> getDevice(@PathVariable("id") int deviceId){
-		Device device= deviceService.getDevice(deviceId);
+		//Device device= deviceService.getDevice(deviceId);
+		 Device device= deviceDao.getDevice(deviceId);
 		// xu ly get trang thai cua device: off /on
 		if(device == null){
 			return new ResponseEntity<Device>( HttpStatus.NOT_FOUND);
@@ -69,7 +69,8 @@ public class DeviceController {
 	 // delete device by id
 	@RequestMapping(value="/device/{id}", method= RequestMethod.DELETE)
 	public ResponseEntity<Device> deleteDevice(@PathVariable("id") int deviceId) {
-		Device device = deviceService.getDevice(deviceId);	
+		//Device device = deviceService.getDevice(deviceId);
+		Device device = deviceDao.getDevice(deviceId);
 		if (device == null) {
 			return new ResponseEntity<Device>(HttpStatus.NOT_FOUND);
 		}
@@ -85,7 +86,8 @@ public class DeviceController {
 		}*/
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Deleted device - ", String.valueOf(deviceId));
-		deviceService.deleteDevice(deviceId);
+		deviceDao.deleteDevice(deviceId);
+		//deviceService.deleteDevice(deviceId);
 		return new ResponseEntity<Device>(device, headers, HttpStatus.NO_CONTENT);
 	}
 	 
@@ -93,12 +95,14 @@ public class DeviceController {
 	 @RequestMapping(value= "/device/{id}", method= RequestMethod.PUT)
 	 public ResponseEntity<Device> updateDevice(@PathVariable ("id") int deviceId, @RequestBody Device device) throws IOException{
 		HttpHeaders headers = new HttpHeaders();		
-		if(deviceService.getDevice(deviceId) == null){
+		//if(deviceService.getDevice(deviceId) == null){
+		if(deviceDao.getDevice(deviceId) == null){
 			return new ResponseEntity<Device>(HttpStatus.NOT_FOUND);
 		}else if(device == null){
 			return new ResponseEntity<Device>(HttpStatus.BAD_REQUEST);		
 		}
-		deviceService.updateDevice(device);		
+		//deviceService.updateDevice(device);
+		deviceDao.updateDevice(device);
 		snmpService= new SnmpServiceImpl();
 		snmpService.setOID(device.getIp(),OID_Sysname,device.getName());
 		// xu ly them truong hop neu' device dang off
@@ -112,7 +116,8 @@ public class DeviceController {
 		 if(device == null){
 			 return new ResponseEntity<Device>(HttpStatus.BAD_REQUEST);
 		 }
-		 deviceService.createDevice(device);
+		// deviceService.createDevice(device);
+		 deviceDao.createDevice(device);
 		 snmpService= new SnmpServiceImpl();
 		 snmpService.setOID(device.getIp(),OID_Sysname,device.getName());
 		 // xu ly them truong hop neu' device off hoac dia chi chua duoc tao tren

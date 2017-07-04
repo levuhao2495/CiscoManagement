@@ -24,10 +24,11 @@ public class SnmpDaoImpl implements SnmpDao{
 	@Autowired
 	private static String  community  = "ciscolab";
 	private static int    snmpVersion  = SnmpConstants.version2c;
+	private TransportMapping transportMapping;
 	@Override
 	public String getOID(String ipAddress, String oid) throws IOException {
-		// TODO Auto-generated method stub
-		TransportMapping transportMapping = new DefaultUdpTransportMapping();
+		String rString= null;
+		transportMapping = new DefaultUdpTransportMapping();
 		transportMapping.listen();
 		// Create Target Address object
 		CommunityTarget communityTarget= new CommunityTarget();
@@ -43,8 +44,36 @@ public class SnmpDaoImpl implements SnmpDao{
 		pdu.setRequestID(new Integer32(1));
 		// Create Snmp object for sending data to Agent
 		Snmp snmp = new Snmp(transportMapping);
-		ResponseEvent response = snmp.get(pdu, communityTarget);
-		return response.getResponse().get(0).getVariable().toString();	
+		ResponseEvent response = snmp.get(pdu, communityTarget);	
+		PDU responsePDU = response.getResponse();
+
+	      if (responsePDU != null)
+	      {
+	        int errorStatus = responsePDU.getErrorStatus();
+	        int errorIndex = responsePDU.getErrorIndex();
+	        String errorStatusText = responsePDU.getErrorStatusText();
+
+	        if (errorStatus == PDU.noError)
+	        {
+	          //System.out.println("Snmp Get Response = " + responsePDU.getVariableBindings());
+	        	rString= response.getResponse().get(0).getVariable().toString();
+	        	
+	        }
+	        else
+	        {
+	          System.out.println("Error: Request Failed");
+	          System.out.println("Error Status = " + errorStatus);
+	          System.out.println("Error Index = " + errorIndex);
+	          System.out.println("Error Status Text = " + errorStatusText);
+	        }
+	      }
+	      else
+	      {
+	    	  rString="null";
+	      }
+		return rString ;			
+		
+		
 	}
 
 	@Override

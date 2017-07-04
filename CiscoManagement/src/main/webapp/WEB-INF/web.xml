@@ -19,9 +19,10 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/*</url-pattern>
-       <!--  <url-pattern>/apivlan/*</url-pattern>
-        <url-pattern>/apiport/*</url-pattern> -->
+        <url-pattern>/apidevice/*</url-pattern>
+        <url-pattern>/apivlan/*</url-pattern>
+        <url-pattern>/apiport/*</url-pattern>
+        <url-pattern>/apitype/*</url-pattern>
     </servlet-mapping>
    
 </web-app>

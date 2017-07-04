@@ -51,7 +51,7 @@ public class VlanDaoImpl implements VlanDao {
 	public void createVlan(Vlan vlan) {
 		// TODO Auto-generated method stub
 		try{
-			strQuery="INSERT INTO vlan(vlanNum, vlanDct, vlanType) VALUES(?,?,?)";
+			strQuery="INSERT INTO vlan(vlannum, vlandct, vlantype) VALUES(?,?,?)";
 			jdbcTemplate.update(strQuery, new Object[] 
 					{ vlan.getVlanNum(), vlan.getVlanDct(), vlan.getVlanType()});
 			}catch(Exception e){
@@ -63,7 +63,7 @@ public class VlanDaoImpl implements VlanDao {
 	public void updateVlan(Vlan vlan) {
 		// TODO Auto-generated method stub
 		try{
-			strQuery="UPDATE vlan SET vlanNum = ? , vlanDct = ? , vlanType = ? WHERE vlanId = ?";
+			strQuery="UPDATE vlan SET vlannum = ? , vlandct = ? , vlantype = ? WHERE vlanid = ?";
 			jdbcTemplate.update(strQuery
 				    , new Object[] {
 				      vlan.getVlanNum(),vlan.getVlanDct(),vlan.getVlanType(),vlan.getVlanId()});

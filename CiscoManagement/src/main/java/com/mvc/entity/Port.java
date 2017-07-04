@@ -1,11 +1,25 @@
 package com.mvc.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Port {
 
 	private Integer portId;
 	private String portName;
 	private Integer status;
 	private Integer iddevice;
+	/*@JsonCreator
+	public Port(@JsonProperty("portId")Integer portId,@JsonProperty("portName") String portName,
+			@JsonProperty("status")Integer status,@JsonProperty("iddevice") Integer iddevice) {
+		super();
+		this.portId = portId;
+		this.portName = portName;
+		this.status = status;
+		this.iddevice = iddevice;
+	}*/
 	public Integer getPortId() {
 		return portId;
 	}

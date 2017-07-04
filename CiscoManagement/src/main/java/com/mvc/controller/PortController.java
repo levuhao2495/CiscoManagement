@@ -21,17 +21,19 @@ import com.mvc.service.PortService;
 import com.mvc.service.SnmpService;
 import com.mvc.service.SnmpServiceImpl;
 
-@RestController
+@RestController(value="apiport")
 public class PortController {
 
 	@Autowired
-	private PortService portService;
+	//private PortService portService;
+	private PortDao portDao;
 	private SnmpService snmpService;
 	// get all port
 	@RequestMapping(value="/port", method=RequestMethod.GET, produces= "application/json")
 	public ResponseEntity<List<Port>> getAllPort(){
 		HttpHeaders httpHeaders= new HttpHeaders();
-		List<Port> ports= portService.getAllPort();
+		//List<Port> ports= portService.getAllPort();
+		List<Port> ports= portDao.getAllPort();
 		if(ports == null){
 			return new ResponseEntity<List<Port>>(HttpStatus.NOT_FOUND);
 		}
@@ -43,7 +45,8 @@ public class PortController {
 	@RequestMapping(value="/port/{deviceid}", method=RequestMethod.GET, produces= "application/json")
 	public ResponseEntity<List<Port>> getPortByDevice(@PathVariable("deviceid") Integer deviceid){
 		HttpHeaders httpHeaders= new HttpHeaders();
-		List<Port> ports= portService.getPortByDevice(deviceid);
+		//List<Port> ports= portService.getPortByDevice(deviceid);
+		List<Port> ports= portDao.getPortByDevice(deviceid);
 		if(ports == null){
 			return new ResponseEntity<List<Port>>(HttpStatus.NOT_FOUND);
 		}
@@ -54,14 +57,15 @@ public class PortController {
 	//delete port by id device
 	 @RequestMapping(value="/port/{deviceid}", method= RequestMethod.DELETE)
 	 public ResponseEntity<Port> deletePortByDevice(@PathVariable("deviceid") Integer deviceId){
-		 List<Port> ports= portService.getPortByDevice(deviceId);		
+		 //List<Port> ports= portService.getPortByDevice(deviceId);
+		 List<Port> ports= portDao.getPortByDevice(deviceId);
 		 if(ports ==null ){
 			 return new ResponseEntity<Port>(HttpStatus.NOT_FOUND);
 		 }
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Deleted port - ", String.valueOf(deviceId));
 		 for(Port i: ports){
-			 portService.deletePort(i.getIddevice());
+			 portDao.deletePort(i.getIddevice());
 		 }
 		 return new ResponseEntity<Port>(headers,HttpStatus.NO_CONTENT);	 
 	 }

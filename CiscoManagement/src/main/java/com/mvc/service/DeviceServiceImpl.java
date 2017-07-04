@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mvc.dao.DeviceDao;
 import com.mvc.entity.Device;
 
-@Service("deviceService")// cover variable in DeviceController
+//@Service("deviceService")// cover variable in DeviceController
 public class DeviceServiceImpl implements DeviceService{
 
 	

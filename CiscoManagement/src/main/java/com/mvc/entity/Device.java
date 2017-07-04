@@ -1,5 +1,10 @@
 package com.mvc.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Device {
 
 	private int deviceId;
@@ -15,8 +20,11 @@ public class Device {
 	public Device(){
 		
 	}
-	public Device(int deviceid, String ip, String mac, String name, int type, String version, String snmpv,
-			String snmpr, String snmpw) {
+	@JsonCreator
+	public Device(@JsonProperty("deviceId") int deviceid,@JsonProperty("ip") String ip,
+			@JsonProperty("mac")String mac,@JsonProperty("name") String name,@JsonProperty("type") int type, 
+			@JsonProperty("version")String version,@JsonProperty("snmpVersion") String snmpv,
+			@JsonProperty("snmpRead")String snmpr, @JsonProperty("snmpWrite")String snmpw) {
 		super();
 		this.deviceId = deviceid;
 		this.ip = ip;

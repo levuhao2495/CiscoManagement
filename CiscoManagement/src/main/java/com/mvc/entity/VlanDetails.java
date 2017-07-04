@@ -1,11 +1,22 @@
 package com.mvc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VlanDetails {
 
 	private int id;
 	private int idVlan;
 	private int idDevice;
-	
+	/*@JsonIgnoreProperties
+	public VlanDetails(@JsonProperty("id")int id,@JsonProperty("idVlan") int idVlan,
+			@JsonProperty("idDevice")int idDevice) {
+		super();
+		this.id = id;
+		this.idVlan = idVlan;
+		this.idDevice = idDevice;
+	}*/
 	public int getId() {
 		return id;
 	}

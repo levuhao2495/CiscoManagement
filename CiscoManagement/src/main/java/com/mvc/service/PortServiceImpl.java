@@ -9,7 +9,7 @@ import com.mvc.dao.PortDao;
 import com.mvc.dao.PortDaoImpl;
 import com.mvc.entity.Port;
 
-@Service("portService")
+//@Service("portService")
 public class PortServiceImpl implements PortService{
 
 	@Autowired

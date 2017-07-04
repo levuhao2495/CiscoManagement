@@ -16,7 +16,7 @@ import com.mvc.entity.*;
 import com.mvc.dao.VlanDao;
 
 
-@RestController
+@RestController(value="apivlan")
 public class VlanController {
 
 	@Autowired
@@ -44,20 +44,20 @@ public class VlanController {
 		return new ResponseEntity<Vlan>(vlan, HttpStatus.OK);		
 	}
 	//create vlan
-		/*@RequestMapping(value = "/vlan", method = RequestMethod.POST, produces = "application/json")
-		public ResponseEntity<Vlan> createVlan(@RequestBody Vlan vlan) {
-			HttpHeaders headers = new HttpHeaders();
-			if (vlan == null) {
-				return new ResponseEntity<Vlan>(HttpStatus.BAD_REQUEST);
-			}
-			vlanDao.createVlan(vlan);
-			//function choose device work on vlan		
-			headers.add("Vlan Created  - ", String.valueOf(vlan.getVlanId()));
-			return new ResponseEntity<Vlan>(vlan, headers, HttpStatus.CREATED);
-		}*/
+	@RequestMapping(value = "/vlan", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<Vlan> createVlan(@RequestBody Vlan vlan) {
+		HttpHeaders headers = new HttpHeaders();
+		if (vlan == null) {
+			return new ResponseEntity<Vlan>(HttpStatus.BAD_REQUEST);
+		}
+		vlanDao.createVlan(vlan);
+		// function choose device work on vlan
+		headers.add("Vlan Created  - ", String.valueOf(vlan.getVlanId()));
+		return new ResponseEntity<Vlan>(vlan, headers, HttpStatus.CREATED);
+	}
 	
 	//create vlan and choose device
-	@RequestMapping(value = "/vlandevice", method = RequestMethod.POST, produces = "application/json")
+	/*@RequestMapping(value = "/vlandevice", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Vlan> createVlanChooseDevice(@RequestBody Vlan vlan,@RequestBody List<VlanDetails> list) {
 		HttpHeaders headers = new HttpHeaders();
 		if (vlan == null) {
@@ -74,7 +74,7 @@ public class VlanController {
 		}
 		headers.add("Vlan Created  - ", String.valueOf(vlan.getVlanId()));
 		return new ResponseEntity<Vlan>(vlan, headers, HttpStatus.CREATED);
-	}
+	}*/
 	
 	// delete vlan
 	 @RequestMapping(value = "/vlan/{vlanid}", method = RequestMethod.DELETE , produces = "application/json")
